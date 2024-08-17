@@ -7,6 +7,9 @@ using static Unity.Collections.AllocatorManager;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] GameObject _startingBlock;
+    [SerializeField] AudioClip _moveSound;
+    [SerializeField] AudioClip _blockedSound;
+    [SerializeField] AudioClip _eatSound;
     private float _horizontalAxis = 0;
     private float _verticalAxis = 0;
     private readonly float _waitTime = .2f;
@@ -64,7 +67,10 @@ public class PlayerController : MonoBehaviour
         if (IsBlocked(moveVector))
             Blocked();
         else
+        {
+            SoundManager.Instance.PlaySound(_moveSound, transform.position);
             transform.Translate(moveVector);
+        }
     }
 
     private bool IsBlocked(Vector3 moveVector)
@@ -83,7 +89,7 @@ public class PlayerController : MonoBehaviour
 
     private void Blocked()
     {
-
+        SoundManager.Instance.PlaySound(_blockedSound, transform.position);
     }
 
     private void TryEat()
@@ -108,6 +114,11 @@ public class PlayerController : MonoBehaviour
                     blocksToEat.Add(hit.gameObject);
             }
         }
+
+        if (blocksToEat.Count > 0)
+            SoundManager.Instance.PlaySound(_eatSound, transform.position);
+        else
+            SoundManager.Instance.PlaySound(_blockedSound, transform.position);
 
         foreach (var block in blocksToEat)
         {
