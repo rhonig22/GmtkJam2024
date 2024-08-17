@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     private float _currentWait = 0;
     private float _moveSpeed = 1;
     private bool _eatPressed = false;
-    public int Size { get; private set; } = 1;
+    public static int Size { get; private set; } = 1;
     private List<GameObject> _blocksEaten = new List<GameObject>();
 
     // Start is called before the first frame update
@@ -126,6 +126,7 @@ public class PlayerController : MonoBehaviour
             Size += GetBlockSize(block);
             _blocksEaten.Add(block);
             block.layer = 6;
+            block.GetComponent<BlockController>().GetEaten();
         }
     }
 
