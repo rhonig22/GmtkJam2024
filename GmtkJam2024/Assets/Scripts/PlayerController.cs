@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     public static UnityEvent PlayerMoved = new UnityEvent();
     private List<GameObject> _blocksEaten = new List<GameObject>();
 
+    private float _currentLensSize = 4.5f;
+    private readonly float _lensStep = 2f;
     private float _currentPitch = 1;
     private readonly float _pitchStep = .05f;
     private int _currentPitchThreshold = 2;
@@ -144,6 +146,8 @@ public class PlayerController : MonoBehaviour
         {
             _currentPitch -= _pitchStep;
             _currentPitchThreshold *= 2;
+            _currentLensSize += _lensStep;
+            CameraController.ChangeLensSize.Invoke(_currentLensSize);
         }
     }
 
