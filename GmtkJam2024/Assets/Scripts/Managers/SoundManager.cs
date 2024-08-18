@@ -26,11 +26,12 @@ public class SoundManager : MonoBehaviour
         _volume = SaveDataManager.Instance.GetPlayerData().SoundFxVolume;
     }
 
-    public void PlaySound(AudioClip clip, Vector3 position)
+    public void PlaySound(AudioClip clip, Vector3 position, float pitch = 1)
     {
         AudioSource audioSource = Instantiate(_soundEffectsSource, position, Quaternion.identity);
         audioSource.clip = clip;
         audioSource.volume = _volume;
+        audioSource.pitch = pitch;
         audioSource.Play();
         float clipLength = clip.length;
         Destroy(audioSource.gameObject, clipLength);

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.Events;
 using static Unity.Collections.AllocatorManager;
 
 public class PlayerController : MonoBehaviour
@@ -16,12 +17,20 @@ public class PlayerController : MonoBehaviour
     private float _currentWait = 0;
     private float _moveSpeed = 1;
     private bool _eatPressed = false;
+    private bool _moved = false;
+    private LayerMask _blockMask;
     public static int Size { get; private set; } = 1;
+    public static UnityEvent PlayerMoved = new UnityEvent();
     private List<GameObject> _blocksEaten = new List<GameObject>();
+
+    private float _currentPitch = 1;
+    private readonly float _pitchStep = .05f;
+    private int _currentPitchThreshold = 2;
 
     // Start is called before the first frame update
     void Start()
     {
+        _blockMask = LayerMask.GetMask("Block");
         _blocksEaten.Add(_startingBlock);
     }
 
@@ -34,6 +43,11 @@ public class PlayerController : MonoBehaviour
         _horizontalAxis = Input.GetAxisRaw("Horizontal");
         _verticalAxis = Input.GetAxisRaw("Vertical");
         _currentWait -= Time.deltaTime;
+        if (_moved)
+        {
+            _moved = false;
+            PlayerMoved.Invoke();
+        }
     }
 
     // Update is called once per frame
@@ -68,19 +82,18 @@ public class PlayerController : MonoBehaviour
             Blocked();
         else
         {
-            SoundManager.Instance.PlaySound(_moveSound, transform.position);
+            SoundManager.Instance.PlaySound(_moveSound, transform.position, _currentPitch);
             transform.Translate(moveVector);
+            _moved = true;
         }
     }
 
     private bool IsBlocked(Vector3 moveVector)
     {
-        var layerMask = LayerMask.GetMask("Player");
-        layerMask = ~layerMask;
         var blocked = false;
         foreach (var block in _blocksEaten)
         {
-            var hit = Physics2D.OverlapBox(block.transform.position + moveVector, block.transform.localScale, 0, layerMask);
+            var hit = Physics2D.OverlapBox(block.transform.position + moveVector, block.transform.localScale, 0, _blockMask);
             blocked |= (hit != null);
         }
 
@@ -95,8 +108,6 @@ public class PlayerController : MonoBehaviour
     private void TryEat()
     {
         var blocksToEat = new List<GameObject>();
-        var layerMask = LayerMask.GetMask("Player");
-        layerMask = ~layerMask;
         foreach (var block in _blocksEaten)
         {
             for (int i = 0; i < 4; i++)
@@ -109,7 +120,7 @@ public class PlayerController : MonoBehaviour
                     y *= -1;
                 }
 
-                var hit = Physics2D.OverlapBox(block.transform.position + new Vector3(x, y, 0) * _moveSpeed, block.transform.localScale, 0, layerMask);
+                var hit = Physics2D.OverlapBox(block.transform.position + new Vector3(x, y, 0) * _moveSpeed, block.transform.localScale, 0, _blockMask);
                 if (hit != null && CanEat(hit.gameObject))
                     blocksToEat.Add(hit.gameObject);
             }
@@ -127,6 +138,12 @@ public class PlayerController : MonoBehaviour
             _blocksEaten.Add(block);
             block.layer = 6;
             block.GetComponent<BlockController>().GetEaten();
+        }
+
+        if (Size >= _currentPitchThreshold)
+        {
+            _currentPitch -= _pitchStep;
+            _currentPitchThreshold *= 2;
         }
     }
 
