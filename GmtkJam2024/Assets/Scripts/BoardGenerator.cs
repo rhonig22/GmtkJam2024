@@ -26,7 +26,7 @@ public class BoardGenerator : MonoBehaviour
             for (var j = 0; j < _height; j++)
             {
                 var square = Instantiate(isLight ?  _lightSquare : _darkSquare, transform);
-                square.transform.position = new Vector3(i - iOffset, j - jOffset, 0);
+                square.transform.localPosition = new Vector3(i - iOffset, j - jOffset, 0);
                 isLight = !isLight;
             }
 

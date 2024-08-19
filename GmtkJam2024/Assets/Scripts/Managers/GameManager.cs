@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private AudioClip _levelFinishedSound;
     public static GameManager Instance;
     private readonly string _titleScene = "TitleScene";
     private readonly string _settingsScene = "SettingsScene";
@@ -53,7 +52,6 @@ public class GameManager : MonoBehaviour
 
     public void LevelComplete()
     {
-        SoundManager.Instance.PlaySound(_levelFinishedSound, transform.position); 
         LoadOverworld();
     }
 

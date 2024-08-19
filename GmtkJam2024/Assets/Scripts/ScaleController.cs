@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static Unity.Collections.AllocatorManager;
 
 public class ScaleController : MonoBehaviour
@@ -9,10 +10,12 @@ public class ScaleController : MonoBehaviour
     [SerializeField] private int _size = 1;
     [SerializeField] private TextMeshProUGUI _weightText;
     [SerializeField] private TextMeshProUGUI _sizeText;
+    [SerializeField] private SpriteRenderer _scaleImage;
+    [SerializeField] private Color _scaleCompleteColor;
     private BoxCollider2D _thisCollider;
     private readonly int _defaultTextSize = 10;
-    private bool _playerInBounds = false;
     private ContactFilter2D _playerFilter;
+    public bool ScaleComplete { get; private set; } = false;
 
     // Start is called before the first frame update
     void Start()
@@ -50,7 +53,13 @@ public class ScaleController : MonoBehaviour
         _weightText.text = "" + sumArea;
         if (sumArea >= _size)
         {
-            GameManager.Instance.LevelComplete();
+            ScaleComplete = true;
+            _scaleImage.color = _scaleCompleteColor;
+        }
+        else
+        {
+            ScaleComplete = false;
+            _scaleImage.color = Color.white;
         }
     }
 

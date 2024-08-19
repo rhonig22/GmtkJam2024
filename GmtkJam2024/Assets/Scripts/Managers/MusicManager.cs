@@ -6,8 +6,8 @@ using UnityEngine.Rendering;
 public class MusicManager : MonoBehaviour
 {
     public static MusicManager Instance;
-    private readonly float _maxVolume = .5f;
-    private float _volume = .5f;
+    private readonly float _maxVolume = .3f;
+    private float _volume = .3f;
     [SerializeField] private AudioSource _musicSource;
 
     private void Awake()
@@ -47,7 +47,9 @@ public class MusicManager : MonoBehaviour
         SaveDataManager.Instance.SetPlayerData(playerData);
     }
 
-    public float GetCurrentVolume() { return _volume; }
+    public float GetCurrentVolume() {
+        return _volume / _maxVolume;
+    }
 
     public void PlayMusicClip(AudioClip clip, bool playOnce = false)
     {
