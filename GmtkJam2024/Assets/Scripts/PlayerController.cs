@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Size = 1;
         _blockMask = LayerMask.GetMask("Block");
         _blocksEaten.Add(_startingBlock);
     }
@@ -123,7 +124,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 var hit = Physics2D.OverlapBox(block.transform.position + new Vector3(x, y, 0) * _moveSpeed, block.transform.localScale, 0, _blockMask);
-                if (hit != null && CanEat(hit.gameObject))
+                if (hit != null && CanEat(hit.gameObject) && !blocksToEat.Contains(hit.gameObject))
                     blocksToEat.Add(hit.gameObject);
             }
         }

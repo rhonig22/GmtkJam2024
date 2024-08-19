@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class SaveDataManager : MonoBehaviour
 {
@@ -69,7 +71,9 @@ public class SaveDataManager : MonoBehaviour
     public LevelData GetLevelData(string levelName)
     {
         var vals = levelName.Split('-');
-        return _levelList.Levels[int.Parse(vals[0]) - 1][int.Parse(vals[1]) - 1];
+        var world = int.Parse(vals[0]) - 1;
+        var level = int.Parse(vals[1]) - 1;
+        return _levelList.Worlds[world].Levels[level];
     }
 
     private void SetLevelList()
@@ -88,17 +92,17 @@ public class SaveDataManager : MonoBehaviour
     private void CheckUnlocks()
     {
         var totalComplete = 0;
-        for (var i = 0; i < _levelList.Levels.Count; i++)
-            for (var j = 0; j < _levelList.Levels[i].Count; j++)
+        for (var i = 0; i < _levelList.Worlds.Count; i++)
+            for (var j = 0; j < _levelList.Worlds[i].Levels.Count; j++)
             {
-                if (_levelList.Levels[i][j].Completed)
+                if (_levelList.Worlds[i].Levels[j].Completed)
                     totalComplete++;
             }
 
-        for (var i = 0; i < _levelList.Levels.Count; i++)
-            for (var j = 0; j < _levelList.Levels[i].Count; j++)
+        for (var i = 0; i < _levelList.Worlds.Count; i++)
+            for (var j = 0; j < _levelList.Worlds[i].Levels.Count; j++)
             {
-                var levelData = _levelList.Levels[i][j];
+                var levelData = _levelList.Worlds[i].Levels[j];
                 if (levelData.Requirement <= totalComplete)
                     levelData.Unlocked = true;
             }
@@ -108,28 +112,34 @@ public class SaveDataManager : MonoBehaviour
     {
         LevelList levelList = new LevelList()
         {
-            Levels = new List<List<LevelData>>()
+            Worlds = new List<WorldData>()
             {
-                new List<LevelData> { 
-                    new LevelData() { Unlocked = true, Completed = false, Requirement = 0 },
-                    new LevelData() { Unlocked = false, Completed = false, Requirement = 1},
-                    new LevelData() { Unlocked = false, Completed = false, Requirement = 2} ,
-                    new LevelData() { Unlocked = false, Completed = false, Requirement = 2} ,
-                    new LevelData() { Unlocked = false, Completed = false, Requirement = 3} ,
+                new WorldData() {
+                    Levels = new List<LevelData> {
+                        new LevelData() { Unlocked = true, Completed = false, Requirement = 0 },
+                        new LevelData() { Unlocked = false, Completed = false, Requirement = 1},
+                        new LevelData() { Unlocked = false, Completed = false, Requirement = 2} ,
+                        new LevelData() { Unlocked = false, Completed = false, Requirement = 2} ,
+                        new LevelData() { Unlocked = false, Completed = false, Requirement = 3} ,
+                    }
                 },
-                new List<LevelData> { 
-                    new LevelData() { Unlocked = false, Completed = false, Requirement = 4 },
-                    new LevelData() { Unlocked = false, Completed = false, Requirement = 5},
-                    new LevelData() { Unlocked = false, Completed = false, Requirement = 5} ,
-                    new LevelData() { Unlocked = false, Completed = false, Requirement = 6} ,
-                    new LevelData() { Unlocked = false, Completed = false, Requirement = 7} ,
+                new WorldData() {
+                    Levels = new List<LevelData> {
+                        new LevelData() { Unlocked = false, Completed = false, Requirement = 4 },
+                        new LevelData() { Unlocked = false, Completed = false, Requirement = 5},
+                        new LevelData() { Unlocked = false, Completed = false, Requirement = 5} ,
+                        new LevelData() { Unlocked = false, Completed = false, Requirement = 6} ,
+                        new LevelData() { Unlocked = false, Completed = false, Requirement = 7} ,
+                    }
                 },
-                new List<LevelData> { 
-                    new LevelData() { Unlocked = false, Completed = false, Requirement = 8 },
-                    new LevelData() { Unlocked = false, Completed = false, Requirement = 9},
-                    new LevelData() { Unlocked = false, Completed = false, Requirement = 9} ,
-                    new LevelData() { Unlocked = false, Completed = false, Requirement = 9} ,
-                    new LevelData() { Unlocked = false, Completed = false, Requirement = 11} ,
+                new WorldData() {
+                    Levels = new List<LevelData> {
+                        new LevelData() { Unlocked = false, Completed = false, Requirement = 8 },
+                        new LevelData() { Unlocked = false, Completed = false, Requirement = 9},
+                        new LevelData() { Unlocked = false, Completed = false, Requirement = 9} ,
+                        new LevelData() { Unlocked = false, Completed = false, Requirement = 9} ,
+                        new LevelData() { Unlocked = false, Completed = false, Requirement = 11} ,
+                    }
                 },
             }
         };
