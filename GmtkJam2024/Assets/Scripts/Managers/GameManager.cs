@@ -6,15 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private AudioClip _levelFinishedSound;
     public static GameManager Instance;
     private readonly string _titleScene = "TitleScene";
-    private readonly string _kitchenScene = "KitchenScene";
     private readonly string _settingsScene = "SettingsScene";
-    private readonly string _demoScene = "DemoQTE";
-    private readonly string _demoSceneV2 = "DemoV2";
-    private readonly string _introStoryScene = "IntroStoryScene";
-    private readonly string _recipeBookScene = "RecipeBookScene";
-    private readonly string _controlsScene = "ControlsScene";
+    private readonly string _levelScene = "Level";
+    private readonly string _overworldScene = "Overworld";
 
     private void Awake()
     {
@@ -34,34 +31,9 @@ public class GameManager : MonoBehaviour
         TransitionManager.Instance.FadeIn(() => { });
     }
 
-    public void LoadDemo()
-    {
-        LoadScene(_demoScene);
-    }
-
-    public void LoadDemoV2()
-    {
-        LoadScene(_demoSceneV2);
-    }
-
     public void LoadSettings()
     {
         LoadScene(_settingsScene);
-    }
-
-    public void LoadKitchen()
-    {
-        LoadScene(_kitchenScene);
-    }
-
-    public void LoadIntro()
-    {
-        LoadScene(_introStoryScene);
-    }
-
-    public void LoadRecipeBook()
-    {
-        LoadScene(_recipeBookScene);
     }
 
     public void LoadTitleScreen()
@@ -69,9 +41,20 @@ public class GameManager : MonoBehaviour
         LoadScene(_titleScene);
     }
 
-    public void LoadControls()
+    public void LoadOverworld()
     {
-        LoadScene(_controlsScene);
+        LoadScene(_overworldScene);
+    }
+
+    public void LoadLevel(string level)
+    {
+        LoadScene(_levelScene + level);
+    }
+
+    public void LevelComplete()
+    {
+        SoundManager.Instance.PlaySound(_levelFinishedSound, transform.position); 
+        LoadOverworld();
     }
 
     private void LoadScene(string sceneName)

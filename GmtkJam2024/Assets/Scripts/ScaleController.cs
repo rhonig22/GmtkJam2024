@@ -48,6 +48,10 @@ public class ScaleController : MonoBehaviour
         }
 
         _weightText.text = "" + sumArea;
+        if (sumArea >= _size)
+        {
+            GameManager.Instance.LevelComplete();
+        }
     }
 
     private int OverlapColliders(BoxCollider2D a, BoxCollider2D b)
