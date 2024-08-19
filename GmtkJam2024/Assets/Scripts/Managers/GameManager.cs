@@ -25,6 +25,12 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Update()
+    {
+        if (Input.GetButtonDown("Restart"))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     // called second
     private void OnLevelWasLoaded(int level)
     {

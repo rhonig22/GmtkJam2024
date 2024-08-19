@@ -4,7 +4,13 @@ using System.Collections.Generic;
 [Serializable]
 public class LevelList
 {
-    public List<List<LevelData>> Levels;
+    public List<WorldData> Worlds;
+}
+
+[Serializable]
+public class WorldData
+{
+    public List<LevelData> Levels;
 }
 
 [Serializable]
