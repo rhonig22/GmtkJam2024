@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private readonly string _settingsScene = "SettingsScene";
     private readonly string _levelScene = "Level";
     private readonly string _overworldScene = "Overworld";
+    private string _currentLevel = "";
 
     private void Awake()
     {
@@ -47,11 +48,13 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel(string level)
     {
+        _currentLevel = level;
         LoadScene(_levelScene + level);
     }
 
     public void LevelComplete()
     {
+        SaveDataManager.Instance.CompleteLevel(_currentLevel);
         LoadOverworld();
     }
 
