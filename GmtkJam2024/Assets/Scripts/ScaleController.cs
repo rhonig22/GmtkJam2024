@@ -44,7 +44,6 @@ public class ScaleController : MonoBehaviour
         List<Collider2D> results = new List<Collider2D>();
         _thisCollider.OverlapCollider(_playerFilter, results);
         int sumArea = 0;
-        Debug.Log("checking " + results.Count);
         foreach (var hit in results)
         {
             sumArea += OverlapColliders((BoxCollider2D)hit, _thisCollider);
