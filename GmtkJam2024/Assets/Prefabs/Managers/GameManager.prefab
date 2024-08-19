@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6435ec740038124999a127d34ff51c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _levelFinishedSound: {fileID: 8300000, guid: 6dc8eaf51d54a194e9b4374feeb168b9, type: 3}
 --- !u!1 &350034557885929438
 GameObject:
   m_ObjectHideFlags: 0
