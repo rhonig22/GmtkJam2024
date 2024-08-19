@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 4426755884866256205}
   m_Layer: 0
   m_Name: Scale
-  m_TagString: Untagged
+  m_TagString: Scale
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -251,6 +251,8 @@ MonoBehaviour:
   _size: 10
   _weightText: {fileID: 6346877264308991085}
   _sizeText: {fileID: 1640824684471430417}
+  _scaleImage: {fileID: 246027325724681289}
+  _scaleCompleteColor: {r: 0.43137255, g: 1, b: 0.4, a: 1}
 --- !u!1 &4486246925139476482
 GameObject:
   m_ObjectHideFlags: 0
