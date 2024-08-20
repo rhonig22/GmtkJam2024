@@ -13,7 +13,6 @@ public class ScaleController : MonoBehaviour
     [SerializeField] private SpriteRenderer _scaleImage;
     [SerializeField] private Color _scaleCompleteColor;
     private BoxCollider2D _thisCollider;
-    private readonly int _defaultTextSize = 10;
     private ContactFilter2D _playerFilter;
     public bool ScaleComplete { get; private set; } = false;
 
@@ -27,9 +26,7 @@ public class ScaleController : MonoBehaviour
 
         transform.localScale = new Vector3(side, side, 0);
         _sizeText.text = "" + _size;
-        _sizeText.fontSize = side * _defaultTextSize;
         _weightText.text = "0";
-        _weightText.fontSize = side * _defaultTextSize;
 
         var playerMask = LayerMask.GetMask("Player");
         _playerFilter = new ContactFilter2D();

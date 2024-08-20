@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScene.unity
     guid: c6a89a0db5ab1fe41beb1e8994c15a0a
   - enabled: 1
-    path: Assets/Scenes/TestLevel.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
     path: Assets/Scenes/Overworld.unity
     guid: 0bf3792301a6ef649b98ed2886d886d3
   - enabled: 1
@@ -22,8 +19,20 @@ EditorBuildSettings:
     guid: fde0bf4fa0d62d64bb41346297bbca3a
   - enabled: 1
     path: Assets/Scenes/Level1-2.unity
-    guid: 23f0cf5c5d492c849b4d78221e521738
+    guid: de595b2ac113db24baf08e54e52f7ecb
   - enabled: 1
     path: Assets/Scenes/Level1-3.unity
     guid: dd0afe6d2cc0dc748ab7236a4a1bb8ee
+  - enabled: 1
+    path: Assets/Scenes/Level1-5.unity
+    guid: 987b4d99e56f20f41a182b2547a73df8
+  - enabled: 1
+    path: Assets/Scenes/Level1-4.unity
+    guid: 768bfc12f55b72640953795a0c7e1ce6
+  - enabled: 1
+    path: Assets/Scenes/Level2-1.unity
+    guid: 6551e76c0b05cf747a12b11850987e6d
+  - enabled: 1
+    path: Assets/Scenes/Level2-2.unity
+    guid: 8c9bc526cf3d56b4eab40feead3c25ed
   m_configObjects: {}
