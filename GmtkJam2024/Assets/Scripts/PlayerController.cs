@@ -13,7 +13,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip _eatSound;
     private float _horizontalAxis = 0;
     private float _verticalAxis = 0;
-    private readonly float _waitTime = .2f;
+    private readonly float _waitDecrease = .02f;
+    private float _waitTime = .2f;
     private float _currentWait = 0;
     private float _moveSpeed = 1;
     private bool _eatPressed = false;
@@ -143,11 +144,17 @@ public class PlayerController : MonoBehaviour
             block.GetComponent<BlockController>().GetEaten();
         }
 
+        UpdatePlayerScale();
+    }
+
+    private void UpdatePlayerScale()
+    {
         if (Size >= _currentPitchThreshold)
         {
             _currentPitch -= _pitchStep;
             _currentPitchThreshold *= 2;
             _currentLensSize += _lensStep;
+            _waitTime -= _waitDecrease;
             CameraController.ChangeLensSize.Invoke(_currentLensSize);
         }
     }
